@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers\AuthenticationController;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class RegisterTest extends TestCase
@@ -24,12 +23,11 @@ class RegisterTest extends TestCase
 
         // Assert
         $response->assertOk();
-        $response->assertJson(fn (AssertableJson $json) => $json->has("data.message.token"));
-
-        $this->assertDatabaseHas("sellers", [
+        $this->assertDatabaseHas("users", [
             'id'    => 1,
             'name'  => $newUser['name'],
             'email' => $newUser['email'],
         ]);
+        $response->assertJsonPath('token', fn (?string $token) => strlen($token) > 0);
     }
 }
