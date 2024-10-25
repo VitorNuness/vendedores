@@ -2,5 +2,6 @@
 
 return [
     App\Providers\AppServiceProvider::class,
-    \Sellers\Authentication\AuthenticationRouterProvider::class,
+    \PHPOpenSourceSaver\JWTAuth\Providers\LaravelServiceProvider::class,
+    \Sellers\Authentication\Providers\AuthenticationRouterProvider::class,
 ];
