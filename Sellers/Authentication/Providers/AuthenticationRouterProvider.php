@@ -1,9 +1,10 @@
 <?php
 
-namespace Sellers\Authentication;
+namespace Sellers\Authentication\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Route;
+use Sellers\Authentication\Http\Controllers\AuthenticationController;
 
 class AuthenticationRouterProvider extends RouteServiceProvider
 {
@@ -11,7 +12,7 @@ class AuthenticationRouterProvider extends RouteServiceProvider
     {
         Route::post(
             '/login',
-            fn () => ""
+            [AuthenticationController::class, 'store']
         )->name('auth.store');
     }
 }
