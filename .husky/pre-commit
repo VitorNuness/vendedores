@@ -1,0 +1,29 @@
+./vendor/bin/phpstan
+PHPSTAN_STATUS=$?
+if [ $PHPSTAN_STATUS -ne 0 ]; then
+    echo "Opa! Deu ruim aqui com PHPStan. Arrume antes de continuar... 😉";
+    exit $PHPSTAN_STATUS;
+fi;
+
+php artisan test
+TEST_STATUS=$?
+if [ $TEST_STATUS -ne 0 ]; then
+    echo "Opa! Deu ruim aqui com algum teste. Arrume antes de continuar... 😉";
+    exit $TEST_STATUS;
+fi;
+
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep ".php\{0,1\}$") || true
+
+for FILE in $STAGED_FILES
+do
+    ./vendor/bin/pint "${FILE}" > /dev/null 2>&1
+    PINT_STATUS=$?
+    if [ $PINT_STATUS -ne 0 ]; then
+        echo "Erro ao formatar o arquivo ${FILE} com Laravel Pint. Verifique o arquivo.";
+        exit $PINT_STATUS;
+    fi
+    git add "${FILE}";
+done;
+
+echo "Todos os passos foram executados com sucesso! Pronto para o commit. 👍";
+exit 0;
