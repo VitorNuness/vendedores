@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class AuthenticableRequest extends FormRequest
 {
-    public function authenticate(): string
+    public function authenticate(): string|bool
     {
         $credentials = [
             'email'    => $this->input('email'),
