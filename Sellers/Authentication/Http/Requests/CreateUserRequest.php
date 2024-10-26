@@ -2,22 +2,21 @@
 
 namespace Sellers\Authentication\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Sellers\Authentication\DTO\UserDTO;
 
-class CreateUserRequest extends FormRequest
+class CreateUserRequest extends AuthenticableRequest
 {
     public function authorize()
     {
         return true;
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
-            "name"     => ["required", "string"],
-            "email"    => ["required", "email", "unique:users,email"],
-            "password" => ["required", "string"],
+            'name'     => ['required'],
+            'email'    => ['required', 'email', 'unique:users,email'],
+            'password' => ['required'],
         ];
     }
 
@@ -28,15 +27,5 @@ class CreateUserRequest extends FormRequest
             $this->input("email"),
             $this->input("password")
         );
-    }
-
-    public function authenticate(): string
-    {
-        $credentials = [
-            'email'    => $this->input('email'),
-            'password' => $this->input('password'),
-        ];
-
-        return auth()->attempt($credentials);
     }
 }
