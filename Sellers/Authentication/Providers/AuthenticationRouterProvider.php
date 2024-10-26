@@ -14,7 +14,8 @@ class AuthenticationRouterProvider extends RouteServiceProvider
             ->controller(AuthenticationController::class)
             ->group(function () {
                 Route::post('/register', 'store')->name('store');
-                Route::post('/login', 'login')->name('login');
+                Route::middleware(['throttle:login'])
+                    ->post('/login', 'login')->name('login');
             });
     }
 }
