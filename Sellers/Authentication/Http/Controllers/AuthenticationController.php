@@ -5,7 +5,7 @@ namespace Sellers\Authentication\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Sellers\Authentication\Actions\CreateUser;
-use Sellers\Authentication\Http\Requests\CreateUserRequest;
+use Sellers\Authentication\Http\Requests\{CreateUserRequest, CredentialsRequest};
 use Sellers\Authentication\Http\Resources\TokenResource;
 
 class AuthenticationController extends Controller
@@ -20,6 +20,13 @@ class AuthenticationController extends Controller
     {
         $credentials = $request->toDTO();
         $this->createUser->handle($credentials);
+        $token = $request->authenticate();
+
+        return response()->json(new TokenResource($token));
+    }
+
+    public function login(CredentialsRequest $request): JsonResponse
+    {
         $token = $request->authenticate();
 
         return response()->json(new TokenResource($token));
