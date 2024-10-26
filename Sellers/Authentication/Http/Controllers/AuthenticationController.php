@@ -26,11 +26,12 @@ class AuthenticationController extends Controller
         return response()->json(new TokenResource($token));
     }
 
+    /**
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+     */
     public function login(CredentialsRequest $request): JsonResponse
     {
-        if (!$token = $request->authenticate()) {
-            return response()->json([], Response::HTTP_UNAUTHORIZED);
-        }
+        abort_unless($token = $request->authenticate(), Response::HTTP_UNAUTHORIZED);
 
         return response()->json(new TokenResource($token));
     }
