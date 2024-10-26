@@ -24,6 +24,7 @@ class AuthenticationRouterProvider extends RouteServiceProvider
             ->controller(ProfileController::class)
             ->group(function () {
                 Route::get('/me', 'show')->name('show');
+                Route::put('/profile/update', 'update')->name('update');
             });
     }
 }
