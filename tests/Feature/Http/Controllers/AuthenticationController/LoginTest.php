@@ -86,4 +86,22 @@ class LoginTest extends TestCase
             'email' => 'valid',
         ]);
     }
+
+    public function testFailsWithMuchAttempts(): void
+    {
+        // Arrange
+        $credentials = [
+            'email'    => fake()->email(),
+            'password' => fake()->password(),
+        ];
+
+        // Act
+        $this->postJson(route("auth.login"), $credentials);
+        $this->postJson(route("auth.login"), $credentials);
+        $this->postJson(route("auth.login"), $credentials);
+        $response = $this->postJson(route("auth.login"), $credentials);
+
+        // Assert
+        $response->assertTooManyRequests();
+    }
 }
