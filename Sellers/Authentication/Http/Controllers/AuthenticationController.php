@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Sellers\Authentication\Actions\CreateUser;
 use Sellers\Authentication\Http\Requests\{CreateUserRequest, CredentialsRequest};
 use Sellers\Authentication\Http\Resources\TokenResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthenticationController extends Controller
 {
@@ -27,7 +28,9 @@ class AuthenticationController extends Controller
 
     public function login(CredentialsRequest $request): JsonResponse
     {
-        $token = $request->authenticate();
+        if (!$token = $request->authenticate()) {
+            return response()->json([], Response::HTTP_UNAUTHORIZED);
+        }
 
         return response()->json(new TokenResource($token));
     }
