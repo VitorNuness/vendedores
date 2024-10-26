@@ -4,7 +4,7 @@ namespace Sellers\Authentication\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
-use Sellers\Authentication\Actions\CreateUser;
+use Sellers\Authentication\Actions\CreateUserAction;
 use Sellers\Authentication\Http\Requests\{CreateUserRequest, CredentialsRequest};
 use Sellers\Authentication\Http\Resources\TokenResource;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AuthenticationController extends Controller
 {
     public function __construct(
-        private readonly CreateUser $createUser
+        private readonly CreateUserAction $createUser
     ) {
 
     }

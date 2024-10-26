@@ -5,7 +5,7 @@ namespace Sellers\Authentication\Actions;
 use Sellers\Authentication\DTO\UserDTO;
 use Sellers\Authentication\Repositories\UserRepository;
 
-class CreateUser
+class CreateUserAction
 {
     public function __construct(
         private readonly UserRepository $userRepository
