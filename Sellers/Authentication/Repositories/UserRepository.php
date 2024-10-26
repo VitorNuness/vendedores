@@ -7,12 +7,24 @@ use Sellers\Authentication\DTO\UserDTO;
 
 class UserRepository
 {
-    public function store(UserDTO $userDTO): User
+    public function store(UserDTO $userDTO): UserDTO
     {
-        return User::query()->create([
+        $user = User::query()->create([
             "name"     => $userDTO->name,
             "email"    => $userDTO->email,
             "password" => $userDTO->password,
         ]);
+
+        return UserDTO::fromModel($user);
+    }
+
+    public function updateName(int|string $id, string $name): UserDTO
+    {
+        $user = User::query()->findOrFail($id);
+        $user->update([
+            'name' => $name,
+        ]);
+
+        return UserDTO::fromModel($user);
     }
 }
