@@ -6,6 +6,9 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Sellers\Authentication\DTO\UserDTO;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProfileResource extends JsonResource
 {
