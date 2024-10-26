@@ -2,7 +2,10 @@
 
 namespace Sellers\Authentication\Http\Resources;
 
-use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Sellers\Authentication\DTO\UserDTO;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -10,7 +13,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class ProfileResource extends JsonResource
 {
     public function __construct(
-        public User $user,
+        public UserDTO $user,
     ) {
     }
 
