@@ -35,4 +35,11 @@ class AuthenticationController extends Controller
 
         return response()->json(new TokenResource($token));
     }
+
+    public function destroy(): Response
+    {
+        auth()->logout();
+
+        return response()->noContent();
+    }
 }
