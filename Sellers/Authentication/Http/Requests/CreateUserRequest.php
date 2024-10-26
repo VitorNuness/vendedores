@@ -22,10 +22,6 @@ class CreateUserRequest extends AuthenticableRequest
 
     public function toDTO(): UserDTO
     {
-        return new UserDTO(
-            $this->input("name"),
-            $this->input("email"),
-            $this->input("password")
-        );
+        return UserDTO::fromRequest($this);
     }
 }
