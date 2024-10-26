@@ -10,9 +10,12 @@ class AuthenticationRouterProvider extends RouteServiceProvider
 {
     public function map(): void
     {
-        Route::post(
-            '/login',
-            [AuthenticationController::class, 'store']
-        )->name('auth.store');
+        Route::name('auth.')
+            ->controller(AuthenticationController::class)
+            ->group(function () {
+                Route::post('/register', 'store')->name('store');
+                Route::middleware(['throttle:login'])
+                    ->post('/login', 'login')->name('login');
+            });
     }
 }
