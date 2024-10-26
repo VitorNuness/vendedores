@@ -4,7 +4,7 @@ namespace Sellers\Authentication\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Route;
-use Sellers\Authentication\Http\Controllers\AuthenticationController;
+use Sellers\Authentication\Http\Controllers\{AuthenticationController, ProfileController};
 
 class AuthenticationRouterProvider extends RouteServiceProvider
 {
@@ -18,6 +18,12 @@ class AuthenticationRouterProvider extends RouteServiceProvider
                     ->post('/login', 'login')->name('login');
                 Route::middleware('auth')
                     ->get('/logout', 'destroy')->name('logout');
+            });
+        Route::name('profile.')
+            ->middleware('auth')
+            ->controller(ProfileController::class)
+            ->group(function () {
+                Route::get('/me', 'show')->name('show');
             });
     }
 }
