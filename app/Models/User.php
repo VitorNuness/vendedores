@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\{Builder, Prunable, SoftDeletes};
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+use Sellers\Sale\Data\Models\Sale;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -30,6 +32,11 @@ class User extends Authenticatable implements JWTSubject
         return [
             'password' => 'hashed',
         ];
+    }
+
+    public function sales(): HasMany
+    {
+        return $this->hasMany(Sale::class, 'owner_id');
     }
 
     public function getJWTIdentifier(): string
