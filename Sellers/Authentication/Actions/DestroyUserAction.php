@@ -2,18 +2,20 @@
 
 namespace Sellers\Authentication\Actions;
 
-use Sellers\Authentication\DTO\UserDTO;
 use Sellers\Authentication\Repositories\UserRepository;
 
-class CreateUser
+class DestroyUserAction
 {
     public function __construct(
         private readonly UserRepository $userRepository
     ) {
     }
 
-    public function handle(UserDTO $userDTO): void
+    public function handle(): void
     {
-        $this->userRepository->store($userDTO);
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+
+        $this->userRepository->destroy($user->id);
     }
 }
