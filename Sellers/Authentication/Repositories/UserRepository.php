@@ -27,4 +27,14 @@ class UserRepository
 
         return UserDTO::fromModel($user);
     }
+
+    /**
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+     */
+    public function destroy(int $id): void
+    {
+        User::query()
+            ->findOrFail($id)
+            ->delete();
+    }
 }
