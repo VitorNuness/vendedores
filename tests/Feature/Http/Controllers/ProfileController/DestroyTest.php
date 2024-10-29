@@ -23,4 +23,20 @@ class DestroyTest extends TestCase
         $response->assertNoContent();
         $this->assertSoftDeleted($user);
     }
+
+    public function testCanPruneUsersWasDeletedMoreThanOneMonth(): void
+    {
+        // Arrange
+        $user = User::factory()->create([
+            'deleted_at' => now()->subMonth(),
+        ]);
+
+        // Act
+        $this->artisan('model:prune');
+
+        // Assert
+        $this->assertDatabaseMissing('users', [
+            'id' => $user->id,
+        ]);
+    }
 }
