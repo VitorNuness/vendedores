@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\{Builder, Prunable, SoftDeletes};
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
@@ -11,6 +11,7 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasFactory;
     use SoftDeletes;
+    use Prunable;
 
     protected $table = 'users';
 
@@ -39,5 +40,10 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims(): array
     {
         return [];
+    }
+
+    public function prunable(): Builder
+    {
+        return static::query()->where('deleted_at', '<=', now()->subMonth());
     }
 }
